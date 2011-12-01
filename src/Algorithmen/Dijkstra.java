@@ -7,11 +7,19 @@ import Interfaces.Graph;
 import Interfaces.RatedEdge;
 import Interfaces.Vertex;
 
-class Dijkstra {
+public class Dijkstra {
 	static int zugriffe; 
 	static long zstVorher = 0;
 	static long zstNachher = 0;
+	static long time = 0;
+
+	public static long getLastTime(){
+		return time;
+	}
 	
+	public static long getLastZugriffe(){
+		return zugriffe;
+	}
 	//shortestWayDijkstra:
 	//Ermittelt durch den Dijkstra-Algorithmus den kuerzesten Weg von source nach target unter beruecksichtigung der 
 	//Kantengewichtung und gibt ihn als Liste zurueck. Bei negativen Gewichtungen kann der Algorithmus falsche Ergebnisse liefern!
@@ -54,7 +62,8 @@ class Dijkstra {
 		}
 		//PrintTime
 		zstNachher = System.currentTimeMillis();
-		System.out.println("Zeit bentigt: " + ((zstNachher - zstVorher)) + " Millisec");
+		time = zstNachher - zstVorher;
+		System.out.println("Zeit bentigt: " + time + " Millisec");
 		return res;
 	}
 	

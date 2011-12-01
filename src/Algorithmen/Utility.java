@@ -50,8 +50,16 @@ public class Utility {
 		return GraphImpl.valueOf(false,vertexs,edges);
 	}
 	
+	public static <V extends Vertex,E extends Edge> Graph<V,E> makeGraphl(ArrayList<V> vertexs, ArrayList<E> l){
+		return GraphImpl.valueOf(false,vertexs,l);
+	}
+	
 	public static <V extends Vertex,E extends Edge> Graph<V,E> makeDigraph(ArrayList<V> vertexs, E... edges){
 		return GraphImpl.valueOf(true,vertexs,edges);
+	}
+	
+	public static <V extends Vertex,E extends Edge> Graph<V,E> makeDigraphl(ArrayList<V> vertexs, ArrayList<E> l){
+		return GraphImpl.valueOf(true,vertexs,l);
 	}
 	
 	//ShortestWayBFS:
@@ -65,7 +73,7 @@ public class Utility {
 	//getComponent:
 	//Ermittelt durch Breitensuche alle Ecken der Komponente in der source sich befindet und gibt sie als Liste zur�ck.
 	//Falls source kein Eckn ist, wird eine Exception geworfen.
-	public static <V extends Vertex,E extends Edge> ArrayList<V> getComponent(Graph<V,E> g,int from, int times) {
+	public static <V extends Vertex,E extends Edge> ArrayList<V> getComponentBFS(Graph<V,E> g,int from, int times) {
 		return BFS.getComponent(g, from, times);
 	}
 	
@@ -76,12 +84,18 @@ public class Utility {
 	//Falls source oder target keine Ecken sind, wird eine Exception geworfen.
 	public static <V extends Vertex,E extends RatedEdge> ArrayList<V> shortestWayDijkstra(Graph<V,E> g,int from, int to, int times) {
 		return Dijkstra.shortestWayDijkstra(g, from, to, times);
-		}
+	}
 	
 	//shortestWayFloydWarshall:
 	public static <V extends Vertex,E extends RatedEdge> ArrayList<V> shortestWayFloydWarshall(Graph<V,E> g,int from, int to, int times) {
-		return FloydWarshall.shortestWayFloydWarshall(g, g.getV(from).getId(), g.getV(to).getId(), times);
-		}
+		return FloydWarshall.shortestWayFloydWarshall(g, from, to, times);
+	}
+
+	//shortestWayFloydWarshall:
+	public static <V extends Vertex,E extends CapacityEdge> Double[][] shortestWayFordFulkerson(Graph<V,E> g,int from, int to, int times) {
+		return FordFulkerson.shortestWayFordFulkerson(g, from, to, times);
+	}
+	
 	}
 
 

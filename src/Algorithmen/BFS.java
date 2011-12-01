@@ -7,11 +7,19 @@ import Interfaces.Edge;
 import Interfaces.Graph;
 import Interfaces.Vertex;
 
-class BFS {
-	static int zugriffe; 
+public class BFS {
+	public static int zugriffe; 
 	static long zstVorher = 0;
 	static long zstNachher = 0;
+	public static long time = 0;
 	
+	public static long getLastTime(){
+		return time;
+	}
+	
+	public static long getLastZugriffe(){
+		return zugriffe;
+	}
 	
 	//getComponent:
 	//Ermittelt durch Breitensuche alle Ecken der Komponente in der source sich befindet und gibt sie als Liste zur�ck.
@@ -19,7 +27,7 @@ class BFS {
 	static <V extends Vertex,E extends Edge> ArrayList<V> getComponent(Graph<V,E> g,int from, int times) {
 		
 			if (g.getNumOfVertexs() < from) {
-				throw new IllegalArgumentException("Vertex not found");
+				return	new ArrayList<V>();
 			}
 			//InitTime
 			zstVorher = System.currentTimeMillis();
@@ -36,7 +44,8 @@ class BFS {
 			System.out.println("Zugriffe: " + zugriffe);
 			//PrintTime
 			zstNachher = System.currentTimeMillis();
-			System.out.println("Zeit bentigt: " + ((zstNachher - zstVorher)) + " Millisec");
+			time = zstNachher - zstVorher;
+			System.out.println("Zeit bentigt: " + time + " Millisec");
 			return res;
 		
 	}
@@ -48,7 +57,7 @@ class BFS {
 	static <V extends Vertex,E extends Edge> ArrayList<V> shortestWayBFS(Graph<V,E> g, int source, int target, int times) {	
 			
 			if ((g.getNumOfVertexs() < source) || (g.getNumOfVertexs() < target)) {
-				throw new IllegalArgumentException("Vertex not found");
+				return	new ArrayList<V>();
 			}
 			//InitTime
 			zstVorher = System.currentTimeMillis();
@@ -67,11 +76,16 @@ class BFS {
 			for(int i=times;i>=0;i--){
 				zugriffe = 0;
 				res = breitensuche(g,g.getV(source), g.getV(target));
+				
+				
+				
+				
 			}
 			//Print
 			System.out.println("Zugriffe: " + zugriffe);
 			zstNachher = System.currentTimeMillis();
-			System.out.println("Zeit bentigt: " + ((zstNachher - zstVorher)) + " Millisec");
+			time = zstNachher - zstVorher;
+			System.out.println("Zeit bentigt: " + time + " Millisec");
 			return res;
 	}
 	
@@ -96,12 +110,13 @@ class BFS {
 					zugriffe++;
 					if (!visited.contains(n)) {
 						if (n == to) {
-							ArrayList<V> res = new ArrayList<V>();
-							for (int c = 0; c <= i; c++) {
+							ArrayList<V> res = new ArrayList<V>((temp.keySet().size()));
+							for (int c = 0; c < (temp.keySet().size()-1); c++) {
 								zugriffe++;
-								res.add(c,temp.get(c).get(0));
+								res.add(c,temp.get(c).get(temp.get(c).size()-1));
 							}
-							res.add(n);
+							
+								res.add(n);
 							return res;
 						}
 						visited.add(n);
@@ -112,7 +127,7 @@ class BFS {
 			}
 			i++;
 		}
-		// Ausgabe (Rckweg suchen)
+//		// Ausgabe (Rckweg suchen)
 		ArrayList<V> res = new ArrayList<V>();
 		for (ArrayList<V> v : temp.values()) {
 			zugriffe++;

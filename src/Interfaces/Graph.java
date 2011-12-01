@@ -6,6 +6,8 @@ public interface Graph<V extends Vertex,E extends Edge> {
 	
 	public void ausgabe();
 	
+	public boolean isDirected();
+	
 	public V getV(int id);
 	
 	public ArrayList<V> getVertexs();
@@ -22,7 +24,9 @@ public interface Graph<V extends Vertex,E extends Edge> {
 	
 	public Double getValueBetween(V source, V target);
 	
-	public E getEdgeBetween(V source, V target);
+	public ArrayList<E> getEdgeBetween(V source, V target);
 	
 	public ArrayList<V> getNeighbors(V v);
+	
+	public ArrayList<E> getAdjazentEdges(V v);
 }
