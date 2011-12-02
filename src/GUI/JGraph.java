@@ -3,12 +3,14 @@ package GUI;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import Interfaces.Edge;
 import Interfaces.Graph;
 import Interfaces.Vertex;
 
 
+import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 
 public class JGraph extends mxGraph {
@@ -16,7 +18,7 @@ public class JGraph extends mxGraph {
 	private static final HashMap<Integer,Object> EdgeObjectList = new HashMap<Integer,Object>();
 
 	
-	public <V extends Vertex,E extends Edge> JGraph(Graph<V,E> graph,Dimension d){
+	public <V extends Vertex,E extends Edge> JGraph(Graph<V,E> graph,Dimension d,int type){
 		int width = d.width;
 		int height = d.height;
 	
@@ -40,12 +42,22 @@ public class JGraph extends mxGraph {
 		
 		Integer edgesTemp = 1;
 				for(E e : graph.getEdges()){
-					EdgeObjectList.put(edgesTemp,insertEdge(getDefaultParent(), null, "e" + edgesTemp + " (" + e.getValue() +")                 ", VertexObjectList.get(e.getId()[0]), VertexObjectList.get(e.getId()[1]),"strokeColor=black;fillColor=black"));
+					String value = "";
+					if(type == 1)
+						value = "e" + edgesTemp + "                 ";
+					if(type == 2)
+						value = "e" + edgesTemp + " (" + e.getValue() +")                 ";
+					if(type == 3)
+						value = "e" + edgesTemp + " (0/" + e.getValue() +")                ";
+					
+					EdgeObjectList.put(edgesTemp,insertEdge(getDefaultParent(), null,value, VertexObjectList.get(e.getId()[0]), VertexObjectList.get(e.getId()[1]),"strokeColor=black;fillColor=black"));
 					edgesTemp++;
 				if(!graph.isDirected()){
 					EdgeObjectList.put((edgesTemp+ graph.getNumOfEdges()),insertEdge(getDefaultParent(), null, "", VertexObjectList.get(e.getId()[1]), VertexObjectList.get(e.getId()[0]),"strokeColor=black;fillColor=black"));
 					}
 				}
+				
+//				setCellsSelectable(false);
 			}
 	
 	
@@ -71,6 +83,26 @@ public class JGraph extends mxGraph {
 			setCellStyle("strokeColor=red;fontColor=red",getEdges(VertexObjectList.get(o.getId())));
 			}
 	}
+	
+	public void setFlow(Double[][] m) {
+		setCellStyle("strokeColor=black;",EdgeObjectList.values().toArray());
+		setCellStyle("strokeColor=black;fontColor=black",VertexObjectList.values().toArray());
+		for(int i1 = 0;i1<m.length; i1++){
+			for(int i2 = 0;i2<m[i1].length; i2++){
+				if(m[i1][i2] > 0){
+					System.out.println(i1 + " " + i2);
+		System.out.println(m[i1][i2]);
+				mxCell o = ((mxCell)getEdgesBetween(VertexObjectList.get(i1),VertexObjectList.get(i2))[0]);
+					String s = (String) o.getValue();
+					System.out.println(s.substring(0,4) +  m[i1][i2] + s.substring(5));
+					cellLabelChanged(o, s.substring(0,4) +  m[i1][i2] + s.substring(5), false) ;
+					setCellStyle("strokeColor=red;fontColor=red",getEdgesBetween(VertexObjectList.get(i1),VertexObjectList.get(i2)));
+				}
+			}
+//			setCellStyle("strokeColor=red;fontColor=red",new Object[]{VertexObjectList.get(o.getId())});
+//		setCellStyle("strokeColor=red;fontColor=red",getEdges(VertexObjectList.get(o.getId())));
+		}
+}
 	
 	
 	}

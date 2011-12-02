@@ -11,6 +11,7 @@ import javax.swing.*;
 import Algorithmen.BFS;
 import Algorithmen.Dijkstra;
 import Algorithmen.FloydWarshall;
+import Algorithmen.FordFulkerson;
 import Interfaces.CapacityEdge;
 import Interfaces.Edge;
 import Interfaces.Graph;
@@ -34,6 +35,7 @@ public class Frame extends JFrame {
 	JButton buttonCMP;
 	JButton buttonDJ;
 	JButton buttonFW;
+	JButton buttonFF;
 
 	public Frame() {
 		super("GKA");
@@ -97,9 +99,21 @@ public class Frame extends JFrame {
 		numFieldFW2.setHorizontalAlignment(JTextField.RIGHT);
 		numFieldFW2.setValue(0);
 
+		// Felder von FordFulkerson
+		JLabel txtFieldFF1 = new JLabel("von", Label.LEFT);
+		
+		final JFormattedTextField numFieldFF1 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		numFieldFF1.setHorizontalAlignment(JTextField.RIGHT);
+		numFieldFF1.setValue(0);
+		
+		JLabel txtFieldFF2 = new JLabel("bis", Label.LEFT);
+		
+		final JFormattedTextField numFieldFF2 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		numFieldFF2.setHorizontalAlignment(JTextField.RIGHT);
+		numFieldFF2.setValue(0);
 
 		// Buttons
-		buttonBFS = new JButton("Kürzester Weg (BFS)");
+		buttonBFS = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(BFS)</BODY></HTML>");
 		ActionListener actionListenerBFS = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldBFS1.getText().equals("")) && !(numFieldBFS2.getText().equals(""))) {
@@ -114,7 +128,7 @@ public class Frame extends JFrame {
 		};
 		buttonBFS.addActionListener(actionListenerBFS);
 
-		buttonCMP = new JButton("Komponente (BFS)");
+		buttonCMP = new JButton("<HTML><CENTER><BODY>Komponente<BR>(BFS)</BODY></HTML>");
 		ActionListener actionListenerCMP = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldBFS1.getText().equals(""))) {
@@ -128,7 +142,7 @@ public class Frame extends JFrame {
 		};
 		buttonCMP.addActionListener(actionListenerCMP);
 
-		buttonDJ = new JButton("Kürzester Weg (Dijkstra)");
+		buttonDJ = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(Dijkstra)</BODY></HTML>");
 		ActionListener actionListenerDJ = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldBFS1.getText().equals(""))&& !(numFieldBFS2.getText().equals(""))) {
@@ -143,7 +157,7 @@ public class Frame extends JFrame {
 		};
 		buttonDJ.addActionListener(actionListenerDJ);
 
-		buttonFW = new JButton("Kürzester Weg (FloydWarshall)");
+		buttonFW = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(Floyd-Warshall)</BODY></HTML>");
 		ActionListener actionListenerFW = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldFW1.getText().equals(""))	&& !(numFieldFW2.getText().equals(""))) {
@@ -158,6 +172,24 @@ public class Frame extends JFrame {
 		};
 		buttonFW.addActionListener(actionListenerFW);
 
+		buttonFF = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(Ford-Fulkerson)</BODY></HTML>");
+		ActionListener actionListenerFF = new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				if (!(numFieldFF1.getText().equals(""))	&& !(numFieldFF2.getText().equals(""))) {
+					Integer intValue1 = Integer.parseInt(numFieldFF1.getText());
+					Integer intValue2 = Integer.parseInt(numFieldFF2.getText());
+					jg.setFlow(shortestWayFordFulkerson((Graph<Vertex, CapacityEdge>) g, intValue1, intValue2,1000));
+					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
+					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
+				}
+				return;
+			}
+		};
+		buttonFF.addActionListener(actionListenerFF);
+		
+		
+		
+		
 		// DropdownMenu
 		JMenuBar dropDownMenu = new JMenuBar();
 		JMenu men = new JMenu("new Graph");
@@ -214,6 +246,7 @@ public class Frame extends JFrame {
 		menu1.add(buttonCMP, BorderLayout.NORTH);
 		menu1.add(buttonDJ, BorderLayout.NORTH);
 		menu1.add(buttonFW, BorderLayout.NORTH);
+		menu1.add(buttonFF, BorderLayout.NORTH);
 
 		// BFS Felder zusammenfügen
 		Container felderBFS = new Container();
@@ -247,11 +280,20 @@ public class Frame extends JFrame {
 		felderFW.add(txtFieldFW2, BorderLayout.WEST);
 		felderFW.add(numFieldFW2, BorderLayout.EAST);
 
+		// FordFulkerson Felder zusammenfügen
+		Container felderFF = new Container();
+		felderFF.setLayout(new GridLayout(2, 2));
+		felderFF.add(txtFieldFF1, BorderLayout.WEST);
+		felderFF.add(numFieldFF1, BorderLayout.EAST);
+		felderFF.add(txtFieldFF2, BorderLayout.WEST);
+		felderFF.add(numFieldFF2, BorderLayout.EAST);
+
 		// Felder zum menu hinzufügen
 		menu2.add(felderBFS, BorderLayout.EAST);
 		menu2.add(felderCMP, BorderLayout.EAST);
 		menu2.add(felderDJ, BorderLayout.EAST);
 		menu2.add(felderFW, BorderLayout.EAST);
+		menu2.add(felderFF, BorderLayout.EAST);
 
 		// Menus zusammenfügen
 		menu.add(menu1, BorderLayout.WEST);
@@ -259,7 +301,7 @@ public class Frame extends JFrame {
 		content.add(BorderLayout.WEST, menu);
 
 		// Anfangsgraph
-		setGraph(Main.g2);
+		setGraph(Main.g2,3);
 		disableButtons(2);
 
 		// Graph dazu
@@ -267,11 +309,11 @@ public class Frame extends JFrame {
 	}
 
 	
-	public void setGraph(Graph<?, ?> graph) {
+	public void setGraph(Graph<?, ?> graph,int type) {
 		invalidate();
 
 		g = graph;
-		jg = new JGraph(graph, me.getSize());
+		jg = new JGraph(graph, me.getSize(),type);
 		graphComponent = new mxGraphComponent(jg);
 
 		content = getContentPane();

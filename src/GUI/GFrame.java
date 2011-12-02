@@ -127,9 +127,9 @@ public class GFrame extends JFrame {
 			}
 			//Graph erstellen
 			if (directed) {
-				dad.setGraph(makeDigraphl(vertexs(Integer.parseInt(nvb1.getText())),ln));
+				dad.setGraph(makeDigraphl(vertexs(Integer.parseInt(nvb1.getText())),ln),wahl);
 			} else {
-				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),ln));
+				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),ln),wahl);
 			}
 			//erlaubte Buttons einstellen
 			dad.disableButtons(wahl);
@@ -144,9 +144,9 @@ public class GFrame extends JFrame {
 				}
 			}
 			if (directed) {
-				dad.setGraph(makeDigraphl(vertexs(Integer.parseInt(nvb1.getText())),lr));
+				dad.setGraph(makeDigraphl(vertexs(Integer.parseInt(nvb1.getText())),lr),wahl);
 			} else {
-				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),lr));
+				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),lr),wahl);
 			}
 			dad.disableButtons(wahl);
 			break;
@@ -160,9 +160,9 @@ public class GFrame extends JFrame {
 				}
 			}
 			if (directed) {
-				dad.setGraph(makeDigraphl(vertexs(Integer.parseInt(nvb1.getText())),lc));
+				dad.setGraph(makeDigraphl(vertexs(Integer.parseInt(nvb1.getText())),lc),wahl);
 			} else {
-				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),lc));
+				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),lc),wahl);
 			}
 			dad.disableButtons(wahl);
 			break;
