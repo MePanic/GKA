@@ -27,7 +27,7 @@ public class GoldbergTarjan {
 		// InitTime
 		startTime = System.currentTimeMillis();
 		// Fuehre n mal GoldbergTarjan aus, mit n = times
-		Double[][] result = null;
+		int[][] result = null;
 		for (int i = 0; i < times; i++) {
 			zugriffe = 0;
 			result = GoldberTarjanAlgo(g, from, to);
@@ -37,10 +37,18 @@ public class GoldbergTarjan {
 		endTime = System.currentTimeMillis();
 		time = endTime - startTime;
 		System.out.println("Zeit bentigt: " + time + " Millisec");
-		return result;
+		
+		for(int[] p : result){
+			for(int q : p){
+				System.out.print(q + " ");
+			}
+			System.out.println();
+		}
+		
+		return null;
 	}
 	
-	private static <V extends Vertex, E extends CapacityEdge> Double[][] GoldberTarjanAlgo(Graph<V, E> g, int from, int to){
+	private static <V extends Vertex, E extends CapacityEdge> int[][] GoldberTarjanAlgo(Graph<V, E> g, int from, int to){
 		int vNum = g.getNumOfVertexs();
 		int[][] flow = new int[vNum][vNum];
 		int[] distance = new int[vNum];
@@ -91,7 +99,7 @@ public class GoldbergTarjan {
 			
 		}
 		
-		return null;
+		return flow;
 		}
 	}
 	

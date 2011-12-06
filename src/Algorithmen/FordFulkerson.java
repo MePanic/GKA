@@ -73,13 +73,13 @@ public class FordFulkerson {
 			inspiziert.add(v);
 			System.out.println("zufallsEcke" + v.getId());
 			for (E e : g.getAdjazentEdges(v)) {
-				//Bei vorwärtskante
+				//Bei vorwï¿½rtskante
 				if (e.getId()[0] == v.getId()&& !(inspiziert.contains(g.getV(e.getId()[1])))&& e.getValue() > m[e.getId()[0]][e.getId()[1]]) {
 					V tempvert = g.getV(e.getId()[1]);
 					map.put(tempvert,new Double[] {(double) v.getId(),Math.min(map.get(v)[1],e.getValue()- m[e.getId()[0]][e.getId()[1]]) });
 					System.out.println(map.get(tempvert)[0] + " "+ map.get(tempvert)[1]);
 				}
-				//Bei Rückwärtskante
+				//Bei Rï¿½ckwï¿½rtskante
 				if (e.getId()[1] == v.getId()&& !(inspiziert.contains(g.getV(e.getId()[0])))&& 0 < m[e.getId()[0]][e.getId()[1]]) {
 					V tempvert = g.getV(e.getId()[0]);
 					map.put(tempvert,new Double[] {(double) -v.getId(),Math.min(map.get(v)[1],m[e.getId()[0]][e.getId()[1]]) });
