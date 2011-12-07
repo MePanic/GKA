@@ -21,8 +21,7 @@ public class FordFulkerson {
 		return zugriffe;
 	}
 
-	static <V extends Vertex, E extends CapacityEdge> Double[][] shortestWayFordFulkerson(
-			Graph<V, E> g, int from, int to, int times) {
+	static <V extends Vertex, E extends CapacityEdge> Double[][] shortestWayFordFulkerson(Graph<V, E> g, int from, int to, int times) {
 
 		if ((g.getNumOfVertexs() < from) || (g.getNumOfVertexs() < to)) {
 			throw new IllegalArgumentException("Vertex not found");
@@ -41,6 +40,15 @@ public class FordFulkerson {
 		zstNachher = System.currentTimeMillis();
 		time = zstNachher - zstVorher;
 		System.out.println("Zeit bentigt: " + time + " Millisec");
+		
+		System.out.println("Maximaler Fluss: ");
+		for(Double[] p : m){
+			for(Double q : p){
+				System.out.print(q + " ");
+			}
+			System.out.println();
+		}
+		
 		return m;
 
 	}
@@ -51,6 +59,9 @@ public class FordFulkerson {
 			for (int i2 = 0; i2 < g.getNumOfVertexs(); i2++) {
 				m[i][i2] = 0.0;
 			}
+		}
+		if (from == to){
+			return m;
 		}
 		HashMap<V, Double[]> map = new HashMap<V, Double[]>();
 		map.put(from, new Double[] { 0.0, Double.POSITIVE_INFINITY });

@@ -45,8 +45,8 @@ public class EdmundKarp {
 		
 		for(int i = 0; i < g.getNumOfVertexs(); i++){
 			for(int k = 0; k < g.getNumOfVertexs(); k++){
-				if(result[i][k] > 0){ res[k][i] = (double) result[i][k];}
-				else { res[k][i] = 0.0;}
+				if(result[i][k] > 0){ res[i][k] = (double) result[i][k];}
+				else { res[i][k] = 0.0;}
 			}
 		}
 			
@@ -66,7 +66,10 @@ public class EdmundKarp {
 		int[][] flow = new int[vNum][vNum];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		int[] parent = new int[vNum];
-		
+
+		if (from == to){
+			return flow;
+		}
 		while(true){
 			parent = new int[vNum];	
 			Arrays.fill(parent, -1);

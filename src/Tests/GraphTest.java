@@ -37,12 +37,12 @@ public class GraphTest {
 //		System.out.println(shortestWayFloydWarshall(g2,1,6,1000));				
 //		System.out.println(shortestWayDijkstra(g5,0,8,1000));
 //		System.out.println(shortestWayFloydWarshall(g,0,7,1000));	
-		shortestWayFordFulkerson(g7,0,5,1);
+		shortestWayFordFulkerson(g7,0,5,1000);
 //		System.out.println(shortestGoldbergTarjan(g3,1,5,1));
 		shortestWayEdmundKarp(g7,0,5,1000);
-		shortestWayEdmundKarp(g8,0,6,1);
-		shortestWayEdmundKarp(g3,0,7,1);
-		shortestWayEdmundKarp(g6,0,7,1);
+//		shortestWayEdmundKarp(g8,0,6,1);
+//		shortestWayEdmundKarp(g3,0,7,1);
+//		shortestWayEdmundKarp(g6,0,7,1);
 //		for(Double[] d1 : m){
 //			System.out.println();
 //			

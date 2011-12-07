@@ -205,8 +205,8 @@ public class Frame extends JFrame {
 		ActionListener actionListenerEK = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldEK1.getText().equals(""))	&& !(numFieldEK2.getText().equals(""))) {
-					Integer intValue1 = Integer.parseInt(numFieldFF1.getText());
-					Integer intValue2 = Integer.parseInt(numFieldFF2.getText());
+					Integer intValue1 = Integer.parseInt(numFieldEK1.getText());
+					Integer intValue2 = Integer.parseInt(numFieldEK2.getText());
 					jg.setFlow(shortestWayEdmundKarp((Graph<Vertex, CapacityEdge>) g, intValue1, intValue2,1000));
 					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
 					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
