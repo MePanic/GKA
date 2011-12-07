@@ -7,11 +7,12 @@ import Interfaces.Graph;
 import Interfaces.Vertex;
 
 public class EdmundKarp {
-
+	
 	static int zugriffe;
 	static long startTime;
 	static long endTime;
 	static long time;
+	static int maxFlow;
 	public static long getLastTime() {
 		return time;
 	}
@@ -25,7 +26,8 @@ public class EdmundKarp {
 		if ((g.getNumOfVertexs() < from) || (g.getNumOfVertexs() < to)) {
 			throw new IllegalArgumentException("Vertex not found");
 		}
-		System.out.println("GoldbergTarjan:");
+		System.out.println();
+		System.out.println("Edmund und Karp:");
 		// InitTime
 		startTime = System.currentTimeMillis();
 		// Fuehre n mal GoldbergTarjan aus, mit n = times
@@ -48,7 +50,7 @@ public class EdmundKarp {
 			}
 		}
 			
-		
+		System.out.println("Maximaler Fluss: " + maxFlow);
 		for(Double[] p : res){
 			for(Double q : p){
 				System.out.print(q + " ");
@@ -63,80 +65,58 @@ public class EdmundKarp {
 		int vNum = g.getNumOfVertexs();
 		int[][] flow = new int[vNum][vNum];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
-		List<Integer> path = new ArrayList<Integer>();
-		Map<Integer, Integer> parent = new HashMap<Integer, Integer>();
-		Set<Integer> visited = new HashSet<Integer>();
-//System.out.println("edge betw ");
-		
-		int maxFlow = 0;
-		int tempV;
-		int x = 0;
-		boolean end;
+		int[] parent = new int[vNum];
 		
 		while(true){
-			
-		end = false;	
-			
-		int i = 0;
-		int u = 0;
-		queue.add(from);
-		int[] capPath = new int[g.getNumOfVertexs()];
-		capPath[0] = Integer.MAX_VALUE;
-		while (queue.size() > 0) {
-//System.out.println("queue: " + queue + " parent: " + parent);
+			parent = new int[vNum];	
+			Arrays.fill(parent, -1);
+			parent[from] = from;
 			zugriffe++;
-			u = queue.poll();
+			int u = 0;
+			queue.clear();
+			queue.add(from);
+			int[] capPath = new int[g.getNumOfVertexs()];
+			zugriffe++;
+			capPath[from] = Integer.MAX_VALUE;
+			zugriffe++;
+			BACK:
+			while (!queue.isEmpty()) {
 
-				for (V n : g.getNeighbors(g.getV(u))) {
-//System.out.println("n: " + (n.getId()+1) + " u: " + (u+1));	
-					zugriffe++;
-					int flowDiff;
-					if (g.getValueBetween(g.getV(u), n) != null){ flowDiff = g.getValueBetween(g.getV(u), n).intValue() - flow[i][n.getId()];}
-					else { flowDiff = 0; }
-//System.out.println("capa: " + g.getValueBetween(g.getV(u), n) + " flow: " + flow[u][n.getId()] + " flowDiff: " + flowDiff + " edge: " + g.getEdgeBetween(g.getV(u), n));	
-					if (flowDiff > 0 && !visited.contains(n.getId())) {
-
-						parent.put(n.getId(), u);
-						visited.add(n.getId());
-						capPath[n.getId()] = Math.min(capPath[u], flowDiff);
-
-						if(n.getId() == to){ x =  capPath[i+1]; end = true; break;}
-						else{ queue.add(n.getId());}
+				u = queue.poll();
+					for (V n : g.getNeighbors(g.getV(u))) {
+						zugriffe++;
+						if (g.getValueBetween(g.getV(u), n).intValue() - flow[u][n.getId()] > 0 && parent[n.getId()] == -1) {
+	
+							parent[n.getId()] = u;
+							zugriffe++;
+							capPath[n.getId()] = Math.min(capPath[u], g.getValueBetween(g.getV(u), n).intValue() - flow[u][n.getId()]);
+							zugriffe++;
+							if(n.getId() != to){ 
+								queue.add(n.getId());
+							}
+							else{ 
+								int tempV = n.getId();
+								while(parent[tempV] != tempV){
+									int tempVPre = parent[tempV];
+									flow[tempVPre][tempV] += capPath[to];
+									zugriffe++;
+									flow[tempV][tempVPre] -= capPath[to];
+									zugriffe++;
+									tempV = tempVPre;
+								}
+								break BACK;
+							}
+						}
 					}
+			}		
+			if(parent[to] == -1){
+				maxFlow = 0;
+				for(int y : flow[from]){
+					maxFlow += y;
+					zugriffe++;
 				}
-//if(end){System.out.println(":::::::::::::");}
-				if(end){break;}
-			
-			i++;
-			if(end){break;}
+				return flow;
+			}
 		}
-		
-		if(!end){x=0;}
-	
-			
-
-		
-		
-		
-		
-		
-//		if(x == 0){break;}
-		maxFlow += x;
-		tempV = to;
-//System.out.println("tempV: " + tempV);
-		
-		while(tempV != from){
-//System.out.println("tempV from: " + tempV + "--" + from + ":::" +  parent);
-			int tempVPre = parent.get(tempV);
-			flow[tempVPre][tempV] += x;
-			flow[tempV][tempVPre] -= x;
-			tempV = tempVPre;
-		}
-		return flow;
-		}
-//		return flow;
 	}
-	
-
-
 }
