@@ -30,7 +30,7 @@ public class EdmundKarp {
 		System.out.println("Edmund und Karp:");
 		// InitTime
 		startTime = System.currentTimeMillis();
-		// Fuehre n mal GoldbergTarjan aus, mit n = times
+		// Fuehre n mal Edmund und Karp mit n = times aus
 		int[][] result = null;
 		Double[][] res = new Double[g.getNumOfVertexs()][g.getNumOfVertexs()];
 		for (int i = 0; i < times; i++) {
