@@ -96,6 +96,10 @@ public class Utility {
 		return FordFulkerson.shortestWayFordFulkerson(g, from, to, times);
 	}
 	
+	public static <V extends Vertex,E extends CapacityEdge> Double[][] shortestWayEdmundKarp(Graph<V,E> g,int from, int to, int times) {
+		return EdmundKarp.shortestWayEdmundKarp(g, from, to, times);
+	}
+	
 	}
 
 
