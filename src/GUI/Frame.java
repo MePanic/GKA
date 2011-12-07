@@ -36,6 +36,7 @@ public class Frame extends JFrame {
 	JButton buttonDJ;
 	JButton buttonFW;
 	JButton buttonFF;
+	JButton buttonEK;
 
 	public Frame() {
 		super("GKA");
@@ -111,6 +112,19 @@ public class Frame extends JFrame {
 		final JFormattedTextField numFieldFF2 = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		numFieldFF2.setHorizontalAlignment(JTextField.RIGHT);
 		numFieldFF2.setValue(0);
+		
+		// Felder von EdmundKarp
+		JLabel txtFieldEK1 = new JLabel("von", Label.LEFT);
+		
+		final JFormattedTextField numFieldEK1 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		numFieldEK1.setHorizontalAlignment(JTextField.RIGHT);
+		numFieldEK1.setValue(0);
+		
+		JLabel txtFieldEK2 = new JLabel("bis", Label.LEFT);
+		
+		final JFormattedTextField numFieldEK2 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		numFieldEK2.setHorizontalAlignment(JTextField.RIGHT);
+		numFieldEK2.setValue(0);
 
 		// Buttons
 		buttonBFS = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(BFS)</BODY></HTML>");
@@ -172,7 +186,7 @@ public class Frame extends JFrame {
 		};
 		buttonFW.addActionListener(actionListenerFW);
 
-		buttonFF = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(Ford-Fulkerson)</BODY></HTML>");
+		buttonFF = new JButton("<HTML><CENTER><BODY>Größter Fluß<BR>(Ford-Fulkerson)</BODY></HTML>");
 		ActionListener actionListenerFF = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldFF1.getText().equals(""))	&& !(numFieldFF2.getText().equals(""))) {
@@ -186,7 +200,21 @@ public class Frame extends JFrame {
 			}
 		};
 		buttonFF.addActionListener(actionListenerFF);
-		
+
+		buttonEK = new JButton("<HTML><CENTER><BODY>Größter Fluß<BR>(Edmund-Karp)</BODY></HTML>");
+		ActionListener actionListenerEK = new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				if (!(numFieldEK1.getText().equals(""))	&& !(numFieldEK2.getText().equals(""))) {
+					Integer intValue1 = Integer.parseInt(numFieldFF1.getText());
+					Integer intValue2 = Integer.parseInt(numFieldFF2.getText());
+					jg.setFlow(shortestWayEdmundKarp((Graph<Vertex, CapacityEdge>) g, intValue1, intValue2,1000));
+					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
+					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
+				}
+				return;
+			}
+		};
+		buttonEK.addActionListener(actionListenerEK);
 		
 		
 		
@@ -247,6 +275,7 @@ public class Frame extends JFrame {
 		menu1.add(buttonDJ, BorderLayout.NORTH);
 		menu1.add(buttonFW, BorderLayout.NORTH);
 		menu1.add(buttonFF, BorderLayout.NORTH);
+		menu1.add(buttonEK, BorderLayout.NORTH);
 
 		// BFS Felder zusammenfügen
 		Container felderBFS = new Container();
@@ -288,12 +317,21 @@ public class Frame extends JFrame {
 		felderFF.add(txtFieldFF2, BorderLayout.WEST);
 		felderFF.add(numFieldFF2, BorderLayout.EAST);
 
+		// EdmundKapr Felder zusammenfügen
+		Container felderEK = new Container();
+		felderEK.setLayout(new GridLayout(2, 2));
+		felderEK.add(txtFieldEK1, BorderLayout.WEST);
+		felderEK.add(numFieldEK1, BorderLayout.EAST);
+		felderEK.add(txtFieldEK2, BorderLayout.WEST);
+		felderEK.add(numFieldEK2, BorderLayout.EAST);
+		
 		// Felder zum menu hinzufügen
 		menu2.add(felderBFS, BorderLayout.EAST);
 		menu2.add(felderCMP, BorderLayout.EAST);
 		menu2.add(felderDJ, BorderLayout.EAST);
 		menu2.add(felderFW, BorderLayout.EAST);
 		menu2.add(felderFF, BorderLayout.EAST);
+		menu2.add(felderEK, BorderLayout.EAST);
 
 		// Menus zusammenfügen
 		menu.add(menu1, BorderLayout.WEST);

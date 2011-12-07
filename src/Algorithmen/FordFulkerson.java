@@ -57,70 +57,62 @@ public class FordFulkerson {
 
 		ArrayList<V> inspiziert = new ArrayList<V>();
 
-		// 2.
-		while (!inspiziert.contains(to)) {
+		while (true) {
 
-				// 4.
-			if (inspiziert.containsAll(map.keySet())){
-				return m;
-			}
+			//2.b
 			V v = null;
 			for (V t : map.keySet()) {
 				if (!inspiziert.contains(t))
 					v = t;
 			}
-
-			inspiziert.add(v);
-			System.out.println("zufallsEcke" + v.getId());
+				//2.a
+			if(v == null){
+//				// 4.
+				return m;
+			}
 			for (E e : g.getAdjazentEdges(v)) {
 				//Bei vorw�rtskante
-				if (e.getId()[0] == v.getId()&& !(inspiziert.contains(g.getV(e.getId()[1])))&& e.getValue() > m[e.getId()[0]][e.getId()[1]]) {
+				if (e.getId()[0] == v.getId() 
+					&& !(map.keySet().contains(g.getV(e.getId()[1]))) 
+					&& e.getValue() > m[e.getId()[0]][e.getId()[1]]) {
+					
 					V tempvert = g.getV(e.getId()[1]);
 					map.put(tempvert,new Double[] {(double) v.getId(),Math.min(map.get(v)[1],e.getValue()- m[e.getId()[0]][e.getId()[1]]) });
-					System.out.println(map.get(tempvert)[0] + " "+ map.get(tempvert)[1]);
 				}
 				//Bei R�ckw�rtskante
-				if (e.getId()[1] == v.getId()&& !(inspiziert.contains(g.getV(e.getId()[0])))&& 0 < m[e.getId()[0]][e.getId()[1]]) {
+				if (e.getId()[1] == v.getId()
+					&& !(map.keySet().contains(g.getV(e.getId()[0])))
+					&& 0 < m[e.getId()[1]][e.getId()[0]]) {
+					
 					V tempvert = g.getV(e.getId()[0]);
-					map.put(tempvert,new Double[] {(double) -v.getId(),Math.min(map.get(v)[1],m[e.getId()[0]][e.getId()[1]]) });
+					map.put(tempvert,new Double[] {(double) -v.getId(),Math.min(map.get(v)[1],m[e.getId()[1]][e.getId()[0]]) });
 				}
 			}
+			inspiziert.add(v);
 
 			// 3.
 			if (map.keySet().contains(to)) {
 				double differenz = map.get(to)[1];
-
 				V now = to;
 				V next = g.getV(Math.abs(map.get(now)[0].intValue()));
 				Double value = map.get(to)[0];
+				
 				while (now != next) {
 					if (value >= 0) {
-						m[now.getId()][next.getId()] += differenz;
+						m[next.getId()][now.getId()] += differenz;	
 					} else {
-						m[now.getId()][next.getId()] -= differenz;
+						m[now.getId()][next.getId()] -= differenz;	
 					}
 					now = next;
 					next = g.getV(Math.abs(map.get(now)[0].intValue()));
-					System.out.println(now.getId());
-					System.out.println(next.getId());
 				}
-				inspiziert.remove(inspiziert.get(inspiziert.size() - 1));
+				inspiziert.clear();
 				Double[] restore = new Double[] { map.get(from)[0],	map.get(from)[1] };
 				map.clear();
 				map.put(from, restore);
-
-				// if(!map.keySet().contains(to))
-				// return null;
-
-				for (int i = 0; i < g.getNumOfVertexs(); i++) {
-					System.out.println();
-					for (int i2 = 0; i2 < g.getNumOfVertexs(); i2++) {
-
-						System.out.print(m[i][i2]);
-					}
-				}
 			}
+			
+			
 		}
-		return m;
 	}
 }

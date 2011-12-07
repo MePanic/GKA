@@ -90,17 +90,13 @@ public class JGraph extends mxGraph {
 		for(int i1 = 0;i1<m.length; i1++){
 			for(int i2 = 0;i2<m[i1].length; i2++){
 				if(m[i1][i2] > 0){
-					System.out.println(i1 + " " + i2);
 		System.out.println(m[i1][i2]);
 				mxCell o = ((mxCell)getEdgesBetween(VertexObjectList.get(i1),VertexObjectList.get(i2))[0]);
-					String s = (String) o.getValue();
-					System.out.println(s.substring(0,4) +  m[i1][i2] + s.substring(5));
-					cellLabelChanged(o, s.substring(0,4) +  m[i1][i2] + s.substring(5), false) ;
+					String[] s = ((String) o.getValue()).split("/");
+					cellLabelChanged(o, s[0].substring(0,4) +  m[i1][i2] + "/" + s[1], false) ;
 					setCellStyle("strokeColor=red;fontColor=red",getEdgesBetween(VertexObjectList.get(i1),VertexObjectList.get(i2)));
 				}
 			}
-//			setCellStyle("strokeColor=red;fontColor=red",new Object[]{VertexObjectList.get(o.getId())});
-//		setCellStyle("strokeColor=red;fontColor=red",getEdges(VertexObjectList.get(o.getId())));
 		}
 }
 	
