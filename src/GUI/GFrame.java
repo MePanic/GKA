@@ -131,8 +131,6 @@ public class GFrame extends JFrame {
 			} else {
 				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),ln),wahl);
 			}
-			//erlaubte Buttons einstellen
-			dad.disableButtons(wahl);
 			break;
 			}
 		case 2:{
@@ -148,7 +146,6 @@ public class GFrame extends JFrame {
 			} else {
 				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),lr),wahl);
 			}
-			dad.disableButtons(wahl);
 			break;
 			}
 		case 3:{
@@ -164,7 +161,6 @@ public class GFrame extends JFrame {
 			} else {
 				dad.setGraph(makeGraphl(vertexs(Integer.parseInt(nvb1.getText())),lc),wahl);
 			}
-			dad.disableButtons(wahl);
 			break;
 			}
 		}

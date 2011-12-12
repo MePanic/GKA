@@ -222,7 +222,7 @@ public class Frame extends JFrame {
 		JMenuBar dropDownMenu = new JMenuBar();
 		JMenu men = new JMenu("new Graph");
 
-		JMenuItem menuItem1 = new JMenuItem("Noraml Graph", KeyEvent.VK_N);
+		JMenuItem menuItem1 = new JMenuItem("Normal Graph", KeyEvent.VK_N);
 		men.add(menuItem1);
 		menuItem1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -338,9 +338,10 @@ public class Frame extends JFrame {
 		menu.add(menu2, BorderLayout.EAST);
 		content.add(BorderLayout.WEST, menu);
 
-		// Anfangsgraph
+		// Anfangsgraph einlesen
 		setGraph(Main.g2,3);
-		disableButtons(2);
+		
+//		disableButtons(3);
 
 		// Graph dazu
 		content.add(graphComponent);
@@ -348,6 +349,7 @@ public class Frame extends JFrame {
 
 	
 	public void setGraph(Graph<?, ?> graph,int type) {
+		disableButtons(type);
 		invalidate();
 
 		g = graph;
@@ -373,6 +375,8 @@ public class Frame extends JFrame {
 			buttonCMP.setEnabled(true);
 			buttonDJ.setEnabled(false);
 			buttonFW.setEnabled(false);
+			buttonFF.setEnabled(false);
+			buttonEK.setEnabled(false);
 			break;
 		}
 		// gewichteter Graph
@@ -381,6 +385,8 @@ public class Frame extends JFrame {
 			buttonCMP.setEnabled(true);
 			buttonDJ.setEnabled(true);
 			buttonFW.setEnabled(true);
+			buttonFF.setEnabled(false);
+			buttonEK.setEnabled(false);
 			break;
 		}
 		// Flus Graph
@@ -389,6 +395,8 @@ public class Frame extends JFrame {
 			buttonCMP.setEnabled(true);
 			buttonDJ.setEnabled(false);
 			buttonFW.setEnabled(false);
+			buttonFF.setEnabled(true);
+			buttonEK.setEnabled(true);
 			break;
 		}
 		}
