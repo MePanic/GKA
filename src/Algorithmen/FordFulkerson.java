@@ -87,16 +87,16 @@ public class FordFulkerson {
 					&& !(map.keySet().contains(g.getV(e.getId()[1]))) 
 					&& e.getValue() > m[e.getId()[0]][e.getId()[1]]) {
 					
-					V tempvert = g.getV(e.getId()[1]);
-					map.put(tempvert,new Double[] {(double) v.getId(),Math.min(map.get(v)[1],e.getValue()- m[e.getId()[0]][e.getId()[1]]) });
+//					V tempvert = g.getV(e.getId()[1]);
+					map.put(g.getV(e.getId()[1]),new Double[] {(double) v.getId(),Math.min(map.get(v)[1],e.getValue()- m[e.getId()[0]][e.getId()[1]]) });
 				}
 				//Bei R�ckw�rtskante
 				if (e.getId()[1] == v.getId()
 					&& !(map.keySet().contains(g.getV(e.getId()[0])))
 					&& 0 < m[e.getId()[1]][e.getId()[0]]) {
 					
-					V tempvert = g.getV(e.getId()[0]);
-					map.put(tempvert,new Double[] {(double) -v.getId(),Math.min(map.get(v)[1],m[e.getId()[1]][e.getId()[0]]) });
+//					V tempvert = g.getV(e.getId()[0]);
+					map.put(g.getV(e.getId()[0]),new Double[] {(double) -v.getId(),Math.min(map.get(v)[1],m[e.getId()[1]][e.getId()[0]]) });
 				}
 			}
 			inspiziert.add(v);
