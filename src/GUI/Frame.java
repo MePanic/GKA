@@ -127,7 +127,7 @@ public class Frame extends JFrame {
 		numFieldEK2.setValue(0);
 
 		// Buttons
-		buttonBFS = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(BFS)</BODY></HTML>");
+		buttonBFS = new JButton("<HTML><font size=2><CENTER><BODY>Kuerzester Weg<BR>(BFS)</BODY></font></HTML>");
 		ActionListener actionListenerBFS = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldBFS1.getText().equals("")) && !(numFieldBFS2.getText().equals(""))) {
@@ -142,7 +142,7 @@ public class Frame extends JFrame {
 		};
 		buttonBFS.addActionListener(actionListenerBFS);
 
-		buttonCMP = new JButton("<HTML><CENTER><BODY>Komponente<BR>(BFS)</BODY></HTML>");
+		buttonCMP = new JButton("<HTML><font size=2><CENTER><BODY>Komponente<BR>(BFS)</BODY></font></HTML>");
 		ActionListener actionListenerCMP = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldBFS1.getText().equals(""))) {
@@ -156,7 +156,7 @@ public class Frame extends JFrame {
 		};
 		buttonCMP.addActionListener(actionListenerCMP);
 
-		buttonDJ = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(Dijkstra)</BODY></HTML>");
+		buttonDJ = new JButton("<HTML><font size=2><CENTER><BODY>Kuerzester Weg<BR>(Dijkstra)</BODY></font></HTML>");
 		ActionListener actionListenerDJ = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldBFS1.getText().equals(""))&& !(numFieldBFS2.getText().equals(""))) {
@@ -171,7 +171,7 @@ public class Frame extends JFrame {
 		};
 		buttonDJ.addActionListener(actionListenerDJ);
 
-		buttonFW = new JButton("<HTML><CENTER><BODY>Kürzester Weg<BR>(Floyd-Warshall)</BODY></HTML>");
+		buttonFW = new JButton("<HTML><font size=2><CENTER><BODY>Kuerzester Weg<BR>(Floyd-Warshall)</BODY></font></HTML>");
 		ActionListener actionListenerFW = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldFW1.getText().equals(""))	&& !(numFieldFW2.getText().equals(""))) {
@@ -186,7 +186,7 @@ public class Frame extends JFrame {
 		};
 		buttonFW.addActionListener(actionListenerFW);
 
-		buttonFF = new JButton("<HTML><CENTER><BODY>Größter Fluß<BR>(Ford-Fulkerson)</BODY></HTML>");
+		buttonFF = new JButton("<HTML><font size=2><CENTER><BODY>Groesster FluÃŸ<BR>(Ford-Fulkerson)</BODY></font></HTML>");
 		ActionListener actionListenerFF = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldFF1.getText().equals(""))	&& !(numFieldFF2.getText().equals(""))) {
@@ -201,7 +201,7 @@ public class Frame extends JFrame {
 		};
 		buttonFF.addActionListener(actionListenerFF);
 
-		buttonEK = new JButton("<HTML><CENTER><BODY>Größter Fluß<BR>(Edmund-Karp)</BODY></HTML>");
+		buttonEK = new JButton("<HTML><font size=2><CENTER><BODY>Groesster Fluss<BR>(Edmund-Karp)</BODY></font></HTML>");
 		ActionListener actionListenerEK = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldEK1.getText().equals(""))	&& !(numFieldEK2.getText().equals(""))) {
@@ -249,7 +249,7 @@ public class Frame extends JFrame {
 		dropDownMenu.add(men);
 		setJMenuBar(dropDownMenu);
 
-		// Container für alles
+		// Container fï¿½r alles
 		content = getContentPane();
 
 		// Menu-Container
@@ -265,11 +265,11 @@ public class Frame extends JFrame {
 		menu2.setLayout(new GridLayout(15, 1));
 		menu2.setPreferredSize(new Dimension(80, 30));
 
-		// Time/Zugriffe einfügen
+		// Time/Zugriffe einfï¿½gen
 		menu1.add(timeTxtField);
 		menu2.add(zugriffeTxtField);
 
-		// Buttons zum menu hinzufügen
+		// Buttons zum menu hinzufï¿½gen
 		menu1.add(buttonBFS, BorderLayout.WEST);
 		menu1.add(buttonCMP, BorderLayout.NORTH);
 		menu1.add(buttonDJ, BorderLayout.NORTH);
@@ -277,7 +277,7 @@ public class Frame extends JFrame {
 		menu1.add(buttonFF, BorderLayout.NORTH);
 		menu1.add(buttonEK, BorderLayout.NORTH);
 
-		// BFS Felder zusammenfügen
+		// BFS Felder zusammenfï¿½gen
 		Container felderBFS = new Container();
 		felderBFS.setLayout(new GridLayout(2, 2));
 		felderBFS.add(txtFieldBFS1, BorderLayout.WEST);
@@ -285,7 +285,7 @@ public class Frame extends JFrame {
 		felderBFS.add(txtFieldBFS2, BorderLayout.WEST);
 		felderBFS.add(numFieldBFS2, BorderLayout.EAST);
 
-		// Komponente Felder zusammenfügen
+		// Komponente Felder zusammenfï¿½gen
 		Container felderCMP = new Container();
 		felderCMP.setLayout(new GridLayout(2, 2));
 		felderCMP.add(txtFieldCMP1, BorderLayout.WEST);
@@ -293,7 +293,7 @@ public class Frame extends JFrame {
 		felderCMP.add(txtFieldCMP2, BorderLayout.WEST);
 		felderCMP.add(numFieldCMP2, BorderLayout.EAST);
 
-		// Dijkstra Felder zusammenfügen
+		// Dijkstra Felder zusammenfï¿½gen
 		Container felderDJ = new Container();
 		felderDJ.setLayout(new GridLayout(2, 2));
 		felderDJ.add(txtFieldDJ1, BorderLayout.WEST);
@@ -301,7 +301,7 @@ public class Frame extends JFrame {
 		felderDJ.add(txtFieldDJ2, BorderLayout.WEST);
 		felderDJ.add(numFieldDJ2, BorderLayout.EAST);
 
-		// FloydWarshall Felder zusammenfügen
+		// FloydWarshall Felder zusammenfï¿½gen
 		Container felderFW = new Container();
 		felderFW.setLayout(new GridLayout(2, 2));
 		felderFW.add(txtFieldFW1, BorderLayout.WEST);
@@ -309,7 +309,7 @@ public class Frame extends JFrame {
 		felderFW.add(txtFieldFW2, BorderLayout.WEST);
 		felderFW.add(numFieldFW2, BorderLayout.EAST);
 
-		// FordFulkerson Felder zusammenfügen
+		// FordFulkerson Felder zusammenfï¿½gen
 		Container felderFF = new Container();
 		felderFF.setLayout(new GridLayout(2, 2));
 		felderFF.add(txtFieldFF1, BorderLayout.WEST);
@@ -317,7 +317,7 @@ public class Frame extends JFrame {
 		felderFF.add(txtFieldFF2, BorderLayout.WEST);
 		felderFF.add(numFieldFF2, BorderLayout.EAST);
 
-		// EdmundKapr Felder zusammenfügen
+		// EdmundKapr Felder zusammenfï¿½gen
 		Container felderEK = new Container();
 		felderEK.setLayout(new GridLayout(2, 2));
 		felderEK.add(txtFieldEK1, BorderLayout.WEST);
@@ -325,7 +325,7 @@ public class Frame extends JFrame {
 		felderEK.add(txtFieldEK2, BorderLayout.WEST);
 		felderEK.add(numFieldEK2, BorderLayout.EAST);
 		
-		// Felder zum menu hinzufügen
+		// Felder zum menu hinzufï¿½gen
 		menu2.add(felderBFS, BorderLayout.EAST);
 		menu2.add(felderCMP, BorderLayout.EAST);
 		menu2.add(felderDJ, BorderLayout.EAST);
@@ -333,7 +333,7 @@ public class Frame extends JFrame {
 		menu2.add(felderFF, BorderLayout.EAST);
 		menu2.add(felderEK, BorderLayout.EAST);
 
-		// Menus zusammenfügen
+		// Menus zusammenfï¿½gen
 		menu.add(menu1, BorderLayout.WEST);
 		menu.add(menu2, BorderLayout.EAST);
 		content.add(BorderLayout.WEST, menu);

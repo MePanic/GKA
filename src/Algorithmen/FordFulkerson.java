@@ -1,6 +1,7 @@
 package Algorithmen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import Interfaces.CapacityEdge;
@@ -56,10 +57,9 @@ public class FordFulkerson {
 	private static <V extends Vertex, E extends CapacityEdge> Double[][] doFordFulkerson(Graph<V, E> g, V from, V to) {
 		Double[][] m = new Double[g.getNumOfVertexs()][g.getNumOfVertexs()];
 		for (int i = 0; i < g.getNumOfVertexs(); i++) {
-			for (int i2 = 0; i2 < g.getNumOfVertexs(); i2++) {
-				m[i][i2] = 0.0;
-			}
+			Arrays.fill(m[i], 0.0);
 		}
+
 		if (from == to){
 			return m;
 		}
@@ -87,16 +87,16 @@ public class FordFulkerson {
 					&& !(map.keySet().contains(g.getV(e.getId()[1]))) 
 					&& e.getValue() > m[e.getId()[0]][e.getId()[1]]) {
 					
-					V tempvert = g.getV(e.getId()[1]);
-					map.put(tempvert,new Double[] {(double) v.getId(),Math.min(map.get(v)[1],e.getValue()- m[e.getId()[0]][e.getId()[1]]) });
+//					V tempvert = g.getV(e.getId()[1]);
+					map.put(g.getV(e.getId()[1]),new Double[] {(double) v.getId(),Math.min(map.get(v)[1],e.getValue()- m[e.getId()[0]][e.getId()[1]]) });
 				}
 				//Bei R�ckw�rtskante
 				if (e.getId()[1] == v.getId()
 					&& !(map.keySet().contains(g.getV(e.getId()[0])))
 					&& 0 < m[e.getId()[1]][e.getId()[0]]) {
 					
-					V tempvert = g.getV(e.getId()[0]);
-					map.put(tempvert,new Double[] {(double) -v.getId(),Math.min(map.get(v)[1],m[e.getId()[1]][e.getId()[0]]) });
+//					V tempvert = g.getV(e.getId()[0]);
+					map.put(g.getV(e.getId()[0]),new Double[] {(double) -v.getId(),Math.min(map.get(v)[1],m[e.getId()[1]][e.getId()[0]]) });
 				}
 			}
 			inspiziert.add(v);

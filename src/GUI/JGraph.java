@@ -19,23 +19,23 @@ public class JGraph extends mxGraph {
 
 	
 	public <V extends Vertex,E extends Edge> JGraph(Graph<V,E> graph,Dimension d,int type){
-		int width = d.width;
-		int height = d.height;
+		double width = d.width;
+		double height = d.height;
 	
-		double schritt = 360/graph.getNumOfVertexs();
+		double schritt = 360.0/graph.getNumOfVertexs();
 		
 		
 		for (Double temp = 0.0; temp<graph.getNumOfVertexs();temp++) {
 			
-			double hyp =  (((height/2)-50) * Math.cos(((90-((schritt*temp)/2))/ 180 * Math.PI)) * 2);
-			double gk = ( Math.cos((90-((schritt*temp)/2))/ 180 * Math.PI) * hyp);
+			double hyp =  (((height/2.0)-50.0) * Math.cos(((90.0-((schritt*temp)/2))/ 180.0 * Math.PI)) * 2.0);
+			double gk = ( Math.cos((90.0-((schritt*temp)/2.0))/ 180.0 * Math.PI) * hyp);
 			double x,y;
-			if(temp > (graph.getNumOfVertexs()/2)){
-			x = ((width/2)-50)+Math.sqrt((hyp*hyp) - (gk*gk));
+			if(temp > (graph.getNumOfVertexs()/2.0)){
+			x = ((width/2.0)-50.0)+Math.sqrt((hyp*hyp) - (gk*gk));
 			}else {
-			x = (width/2)-50-Math.sqrt((hyp*hyp) - (gk*gk));
+			x = (width/2.0)-50.0-Math.sqrt((hyp*hyp) - (gk*gk));
 			}
-			y = (height)-100-gk;
+			y = (height)-100.0-gk;
 
 			VertexObjectList.put(temp.intValue(),insertVertex(getDefaultParent(), null, ((Integer)(temp).intValue()).toString(), x, y, 40,20,"strokeColor=black;fontColor=black"));
 		}
@@ -58,6 +58,7 @@ public class JGraph extends mxGraph {
 				}
 				
 //				setCellsSelectable(false);
+				setCellsLocked(true);
 			}
 	
 	

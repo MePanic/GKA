@@ -31,7 +31,7 @@ public class EdmundKarp {
 		// InitTime
 		startTime = System.currentTimeMillis();
 		// Fuehre n mal Edmund und Karp mit n = times aus
-		int[][] result = null;
+		double[][] result = null;
 		Double[][] res = new Double[g.getNumOfVertexs()][g.getNumOfVertexs()];
 		for (int i = 0; i < times; i++) {
 			zugriffe = 0;
@@ -61,9 +61,9 @@ public class EdmundKarp {
 		return res;
 	}
 	
-	private static <V extends Vertex, E extends CapacityEdge> int[][] EdmundKarpAlgo( Graph<V, E> g, int from, int to){
+	private static <V extends Vertex, E extends CapacityEdge> double[][] EdmundKarpAlgo( Graph<V, E> g, int from, int to){
 		int vNum = g.getNumOfVertexs();
-		int[][] flow = new int[vNum][vNum];
+		double[][] flow = new double[vNum][vNum];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		int[] parent = new int[vNum];
 
@@ -74,26 +74,27 @@ public class EdmundKarp {
 			parent = new int[vNum];	
 			Arrays.fill(parent, -1);
 			parent[from] = from;
-			zugriffe++;
+//			zugriffe++;
 			int u = 0;
 			queue.clear();
 			queue.add(from);
-			int[] capPath = new int[g.getNumOfVertexs()];
-			zugriffe++;
+			double[] capPath = new double[g.getNumOfVertexs()];
+//			zugriffe++;
 			capPath[from] = Integer.MAX_VALUE;
-			zugriffe++;
+//			zugriffe++;
 			BACK:
 			while (!queue.isEmpty()) {
 
 				u = queue.poll();
 					for (V n : g.getNeighbors(g.getV(u))) {
-						zugriffe++;
-						if (g.getValueBetween(g.getV(u), n).intValue() - flow[u][n.getId()] > 0 && parent[n.getId()] == -1) {
+//						zugriffe++;
+						double nuVal = g.getValueBetween(g.getV(u), n);
+						if (nuVal - flow[u][n.getId()] > 0 && parent[n.getId()] == -1) {
 	
 							parent[n.getId()] = u;
-							zugriffe++;
-							capPath[n.getId()] = Math.min(capPath[u], g.getValueBetween(g.getV(u), n).intValue() - flow[u][n.getId()]);
-							zugriffe++;
+//							zugriffe++;
+							capPath[n.getId()] = Math.min(capPath[u], nuVal - flow[u][n.getId()]);
+//							zugriffe++;
 							if(n.getId() != to){ 
 								queue.add(n.getId());
 							}
@@ -102,9 +103,9 @@ public class EdmundKarp {
 								while(parent[tempV] != tempV){
 									int tempVPre = parent[tempV];
 									flow[tempVPre][tempV] += capPath[to];
-									zugriffe++;
+//									zugriffe++;
 									flow[tempV][tempVPre] -= capPath[to];
-									zugriffe++;
+//									zugriffe++;
 									tempV = tempVPre;
 								}
 								break BACK;
@@ -114,9 +115,9 @@ public class EdmundKarp {
 			}		
 			if(parent[to] == -1){
 				maxFlow = 0;
-				for(int y : flow[from]){
+				for(double y : flow[from]){
 					maxFlow += y;
-					zugriffe++;
+//					zugriffe++;
 				}
 				return flow;
 			}
