@@ -3,6 +3,8 @@ package GKA;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Algorithmen.BFS;
+import Algorithmen.Utility;
 import Interfaces.Edge;
 import Interfaces.Graph;
 import Interfaces.Vertex;
@@ -138,5 +140,22 @@ public class GraphImpl<V extends Vertex,E extends Edge> implements Graph<V,E>{
 			res.addAll(getEdgeBetween(v,v1));
 		}
 		return res;
+	}
+	
+	public Graph<V,E> teilgraphWithout(ArrayList<V> vert,ArrayList<E> edge){
+		ArrayList<V> v = new ArrayList<V>();
+		v.addAll(getVertexs());
+		v.removeAll(vert);
+		ArrayList<E> e = new ArrayList<E>();
+		e.addAll(getEdges());
+		e.removeAll(edge);
+		return valueOf(isDirected(),v,e);
+		
+	}
+	
+	public boolean isSchnittkante(E edge){
+		ArrayList<E> temp = new ArrayList<E>();
+		temp.add(edge);
+		return !Utility.getComponentBFS(this,Ecken.get(0).getId(),0).equals(this.teilgraphWithout(new ArrayList<V>(),temp));
 	}
 }

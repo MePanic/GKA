@@ -29,4 +29,8 @@ public interface Graph<V extends Vertex,E extends Edge> {
 	public ArrayList<V> getNeighbors(V v);
 	
 	public ArrayList<E> getAdjazentEdges(V v);
+
+	public Graph<V,E> teilgraphWithout(ArrayList<V> vert,ArrayList<E> edge);
+	
+	public boolean isSchnittkante(E edge);
 }
