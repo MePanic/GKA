@@ -41,6 +41,8 @@ public class JGraph extends mxGraph {
 		}
 		
 		Integer edgesTemp = 1;
+		
+				
 				for(E e : graph.getEdges()){
 					String value = "";
 					if(type == 1)
@@ -52,8 +54,8 @@ public class JGraph extends mxGraph {
 					
 					EdgeObjectList.put(edgesTemp,insertEdge(getDefaultParent(), null,value, VertexObjectList.get(e.getId()[0]), VertexObjectList.get(e.getId()[1]),"strokeColor=black;fillColor=black"));
 					edgesTemp++;
-				if(!graph.isDirected()){
-					EdgeObjectList.put((edgesTemp+ graph.getNumOfEdges()),insertEdge(getDefaultParent(), null, "", VertexObjectList.get(e.getId()[1]), VertexObjectList.get(e.getId()[0]),"strokeColor=black;fillColor=black"));
+					if(!graph.isDirected()){
+						EdgeObjectList.put((edgesTemp+ graph.getNumOfEdges()),insertEdge(getDefaultParent(), null, "", VertexObjectList.get(e.getId()[1]), VertexObjectList.get(e.getId()[0]),"strokeColor=black;fillColor=black"));
 					}
 				}
 				
@@ -63,11 +65,11 @@ public class JGraph extends mxGraph {
 	
 	
 	public <V extends Vertex> void highlightPath(List<V> tl) {
-			setCellStyle("strokeColor=black;",EdgeObjectList.values().toArray());
-
-			setCellStyle("strokeColor=black;fontColor=black",VertexObjectList.values().toArray());
+		setCellStyle("strokeColor=black;",EdgeObjectList.values().toArray());
+		setCellStyle("strokeColor=black;fontColor=black",VertexObjectList.values().toArray());
 		
 		if (tl.size() == 0) return;
+		
 		for(Integer i = 1; i < tl.size();i++){	
 			setCellStyle("strokeColor=red;fillColor=green;fontColor=red", getEdgesBetween(VertexObjectList.get(tl.get(i-1).getId()),VertexObjectList.get(tl.get(i).getId()))) ;
 		}
@@ -76,13 +78,13 @@ public class JGraph extends mxGraph {
 
 	
 	public <V extends Vertex> void highlightFull(List<V> tl) {
-			setCellStyle("strokeColor=black;",EdgeObjectList.values().toArray());
-			setCellStyle("strokeColor=black;fontColor=black",VertexObjectList.values().toArray());
-			for(V o : tl){
+		setCellStyle("strokeColor=black;",EdgeObjectList.values().toArray());
+		setCellStyle("strokeColor=black;fontColor=black",VertexObjectList.values().toArray());
+		for(V o : tl){
 
-				setCellStyle("strokeColor=red;fontColor=red",new Object[]{VertexObjectList.get(o.getId())});
+			setCellStyle("strokeColor=red;fontColor=red",new Object[]{VertexObjectList.get(o.getId())});
 			setCellStyle("strokeColor=red;fontColor=red",getEdges(VertexObjectList.get(o.getId())));
-			}
+		}
 	}
 	
 	public void setFlow(Double[][] m) {
@@ -99,8 +101,22 @@ public class JGraph extends mxGraph {
 				}
 			}
 		}
+	}	
+	
+	public <V extends Vertex> void highlightFleury(List<V> tl) {
+		int count = 1;
+		setCellStyle("strokeColor=black;",EdgeObjectList.values().toArray());
+		setCellStyle("strokeColor=black;fontColor=black",VertexObjectList.values().toArray());
+		for(int i = 1;i<tl.size(); i++){
+			mxCell o1 = ((mxCell)getEdgesBetween(VertexObjectList.get(tl.get(i-1).getId()),VertexObjectList.get(tl.get(i).getId()))[0]);
+			mxCell o2 = ((mxCell)getEdgesBetween(VertexObjectList.get(tl.get(i-1).getId()),VertexObjectList.get(tl.get(i).getId()))[1]);
+			String s = (((String) o1.getValue()) + " " + count);
+			cellLabelChanged(o1, s, false) ;
+			cellLabelChanged(o2, s, false) ;
+			setCellStyle("strokeColor=red;fontColor=red",getEdgesBetween(VertexObjectList.get(tl.get(i-1).getId()),VertexObjectList.get(tl.get(i).getId())));
+			count++;
+		}
+		setCellStyle("strokeColor=red;fontColor=red",getEdgesBetween(VertexObjectList.get(tl.get(0).getId()),VertexObjectList.get(tl.get(tl.size()-1).getId())));
+	}	
 }
-	
-	
-	}
 

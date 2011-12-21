@@ -37,6 +37,8 @@ public class Frame extends JFrame {
 	JButton buttonFW;
 	JButton buttonFF;
 	JButton buttonEK;
+	JButton buttonFLE;
+	JButton buttonBC;
 
 	public Frame() {
 		super("GKA");
@@ -125,6 +127,28 @@ public class Frame extends JFrame {
 		final JFormattedTextField numFieldEK2 = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		numFieldEK2.setHorizontalAlignment(JTextField.RIGHT);
 		numFieldEK2.setValue(0);
+		
+		// Felder von Fleury
+		JLabel txtFieldFLE1 = new JLabel("von", Label.LEFT);
+		
+		final JFormattedTextField numFieldFLE1 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		numFieldFLE1.setHorizontalAlignment(JTextField.RIGHT);
+		numFieldFLE1.setValue(0);
+		
+		JLabel txtFieldFLE2 = new JLabel();
+		
+		JLabel numFieldFLE2 = new JLabel();
+		
+		// Felder von Bindy Chvatal
+		JLabel txtFieldBC1 = new JLabel("von", Label.LEFT);
+		
+		final JFormattedTextField numFieldBC1 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		numFieldBC1.setHorizontalAlignment(JTextField.RIGHT);
+		numFieldBC1.setValue(0);
+		
+		JLabel txtFieldBC2 = new JLabel();
+		
+		JLabel numFieldBC2 = new JLabel();
 
 		// Buttons
 		buttonBFS = new JButton("<HTML><font size=2><CENTER><BODY>Kuerzester Weg<BR>(BFS)</BODY></font></HTML>");
@@ -215,8 +239,36 @@ public class Frame extends JFrame {
 			}
 		};
 		buttonEK.addActionListener(actionListenerEK);
-		
-		
+
+		buttonFLE = new JButton("<HTML><font size=2><CENTER><BODY>Fleury</BODY></font></HTML>");
+		ActionListener actionListenerFLE = new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				if (!(numFieldFLE1.getText().equals(""))) {
+					Integer intValue1 = Integer.parseInt(numFieldFLE1.getText());
+					jg.highlightFleury(fleury((Graph<Vertex, Edge>) g, intValue1,0));
+					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
+					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
+				}
+				return;
+			}
+		};
+		buttonFLE.addActionListener(actionListenerFLE);
+
+		buttonBC = new JButton("<HTML><font size=2><CENTER><BODY>Fleury</BODY></font></HTML>");
+		ActionListener actionListenerBC = new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				if (!(numFieldBC1.getText().equals(""))) {
+					Integer intValue1 = Integer.parseInt(numFieldBC1.getText());
+					
+//					jg.highlightFleury(fleury((Graph<Vertex, Edge>) g, intValue1,0));
+					
+					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
+					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
+				}
+				return;
+			}
+		};
+		buttonBC.addActionListener(actionListenerBC);
 		
 		// DropdownMenu
 		JMenuBar dropDownMenu = new JMenuBar();
@@ -276,6 +328,8 @@ public class Frame extends JFrame {
 		menu1.add(buttonFW, BorderLayout.NORTH);
 		menu1.add(buttonFF, BorderLayout.NORTH);
 		menu1.add(buttonEK, BorderLayout.NORTH);
+		menu1.add(buttonFLE, BorderLayout.NORTH);
+		menu1.add(buttonBC, BorderLayout.NORTH);
 
 		// BFS Felder zusammenf�gen
 		Container felderBFS = new Container();
@@ -325,6 +379,22 @@ public class Frame extends JFrame {
 		felderEK.add(txtFieldEK2, BorderLayout.WEST);
 		felderEK.add(numFieldEK2, BorderLayout.EAST);
 		
+		// Fleury zusammenf�gen
+		Container felderFLE = new Container();
+		felderFLE.setLayout(new GridLayout(2, 2));
+		felderFLE.add(txtFieldFLE1, BorderLayout.WEST);
+		felderFLE.add(numFieldFLE1, BorderLayout.EAST);
+		felderFLE.add(txtFieldFLE2, BorderLayout.WEST);
+		felderFLE.add(numFieldFLE2, BorderLayout.EAST);
+		
+		// bondyChvatal zusammenf�gen
+		Container felderBC = new Container();
+		felderBC.setLayout(new GridLayout(2, 2));
+		felderBC.add(txtFieldBC1, BorderLayout.WEST);
+		felderBC.add(numFieldBC1, BorderLayout.EAST);
+		felderBC.add(txtFieldBC2, BorderLayout.WEST);
+		felderBC.add(numFieldBC2, BorderLayout.EAST);
+		
 		// Felder zum menu hinzuf�gen
 		menu2.add(felderBFS, BorderLayout.EAST);
 		menu2.add(felderCMP, BorderLayout.EAST);
@@ -332,6 +402,8 @@ public class Frame extends JFrame {
 		menu2.add(felderFW, BorderLayout.EAST);
 		menu2.add(felderFF, BorderLayout.EAST);
 		menu2.add(felderEK, BorderLayout.EAST);
+		menu2.add(felderFLE, BorderLayout.EAST);
+		menu2.add(felderBC, BorderLayout.EAST);
 
 		// Menus zusammenf�gen
 		menu.add(menu1, BorderLayout.WEST);
@@ -339,7 +411,7 @@ public class Frame extends JFrame {
 		content.add(BorderLayout.WEST, menu);
 
 		// Anfangsgraph einlesen
-		setGraph(Main.g2,3);
+		setGraph(Main.g2,1);
 		
 //		disableButtons(3);
 
@@ -377,6 +449,8 @@ public class Frame extends JFrame {
 			buttonFW.setEnabled(false);
 			buttonFF.setEnabled(false);
 			buttonEK.setEnabled(false);
+			buttonFLE.setEnabled(true);
+			buttonBC.setEnabled(true);
 			break;
 		}
 		// gewichteter Graph
@@ -387,6 +461,8 @@ public class Frame extends JFrame {
 			buttonFW.setEnabled(true);
 			buttonFF.setEnabled(false);
 			buttonEK.setEnabled(false);
+			buttonFLE.setEnabled(true);
+			buttonBC.setEnabled(true);
 			break;
 		}
 		// Flus Graph
@@ -397,6 +473,8 @@ public class Frame extends JFrame {
 			buttonFW.setEnabled(false);
 			buttonFF.setEnabled(true);
 			buttonEK.setEnabled(true);
+			buttonFLE.setEnabled(true);
+			buttonBC.setEnabled(true);
 			break;
 		}
 		}

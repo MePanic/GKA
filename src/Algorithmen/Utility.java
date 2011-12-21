@@ -91,13 +91,20 @@ public class Utility {
 		return FloydWarshall.shortestWayFloydWarshall(g, from, to, times);
 	}
 
-	//shortestWayFloydWarshall:
 	public static <V extends Vertex,E extends CapacityEdge> Double[][] shortestWayFordFulkerson(Graph<V,E> g,int from, int to, int times) {
 		return FordFulkerson.shortestWayFordFulkerson(g, from, to, times);
 	}
 	
 	public static <V extends Vertex,E extends CapacityEdge> Double[][] shortestWayEdmundKarp(Graph<V,E> g,int from, int to, int times) {
 		return EdmundKarp.shortestWayEdmundKarp(g, from, to, times);
+	}
+	
+	public static <V extends Vertex,E extends Edge> ArrayList<V> fleury(Graph<V,E> g,int source, int times) {
+		return Fleury.fleury(g, source, times);
+	}
+	
+	public static <V extends Vertex,E extends Edge> ArrayList<V> bondyChvatal(Graph<V,E> g,int source, int times) {
+		return BondyChvatal.bondyChvatal(g, source, times);
 	}
 	
 	}

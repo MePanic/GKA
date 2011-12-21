@@ -106,7 +106,7 @@ public class GraphImpl<V extends Vertex,E extends Edge> implements Graph<V,E>{
 	}
 	
 	public Double getValueBetween(V source, V target){
-		return matrix[source.getId()][target.getId()];
+		return getEdgeBetween(source, target).get(0).getValue();
 	}
 	
 	public ArrayList<E> getEdgeBetween(V source, V target) {
@@ -153,9 +153,10 @@ public class GraphImpl<V extends Vertex,E extends Edge> implements Graph<V,E>{
 		
 	}
 	
-	public boolean isSchnittkante(E edge){
-		ArrayList<E> temp = new ArrayList<E>();
-		temp.add(edge);
-		return !Utility.getComponentBFS(this,Ecken.get(0).getId(),0).equals(this.teilgraphWithout(new ArrayList<V>(),temp));
+	public boolean isSchnittkante(ArrayList<E> edge){
+		ArrayList<V> temp = new ArrayList<V>();
+		temp.add(getV(edge.get(0).getId()[0]));
+		temp.add(getV(edge.get(0).getId()[1]));
+		return !Utility.getComponentBFS(this.teilgraphWithout(new ArrayList<V>(),edge),Ecken.get(0).getId(),0).containsAll(temp);
 	}
 }

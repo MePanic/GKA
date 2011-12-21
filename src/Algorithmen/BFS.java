@@ -32,7 +32,7 @@ public class BFS {
 			//InitTime
 			zstVorher = System.currentTimeMillis();
 			
-			System.out.println("getComponents:");
+//			System.out.println("getComponents:");
 			//InitTime
 			zstVorher = System.currentTimeMillis();
 			//F�hre n mal die Breitensuche aus, mit n = times
@@ -41,11 +41,11 @@ public class BFS {
 				zugriffe = 0;
 				res = breitensuche(g,g.getV(from), g.getV(from));
 			}
-			System.out.println("Zugriffe: " + zugriffe);
+//			System.out.println("Zugriffe: " + zugriffe);
 			//PrintTime
 			zstNachher = System.currentTimeMillis();
 			time = zstNachher - zstVorher;
-			System.out.println("Zeit bentigt: " + time + " Millisec");
+//			System.out.println("Zeit bentigt: " + time + " Millisec");
 			return res;
 		
 	}

@@ -32,5 +32,5 @@ public interface Graph<V extends Vertex,E extends Edge> {
 
 	public Graph<V,E> teilgraphWithout(ArrayList<V> vert,ArrayList<E> edge);
 	
-	public boolean isSchnittkante(E edge);
+	public boolean isSchnittkante(ArrayList<E> edge);
 }
