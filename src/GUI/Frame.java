@@ -260,7 +260,7 @@ public class Frame extends JFrame {
 				if (!(numFieldBC1.getText().equals(""))) {
 					Integer intValue1 = Integer.parseInt(numFieldBC1.getText());
 					
-//					jg.highlightFleury(fleury((Graph<Vertex, Edge>) g, intValue1,0));
+					jg.highlightFleury(bondyChvatal((Graph<Vertex, Edge>) g, intValue1,0));
 					
 					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
 					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
