@@ -42,6 +42,10 @@ public class BondyChvatal {
 		zstNachher = System.currentTimeMillis();
 		time = zstNachher - zstVorher;
 		System.out.println("Zeit bentigt: " + time + " Millisec");
+		
+		if(res.size()==0){System.out.println("Kein Hamiltonkreis!");}
+		else{ System.out.println(res);}
+		
 		return res;
 	}
 
@@ -96,18 +100,11 @@ public class BondyChvatal {
 				}
 			}
 		}
+		if(hamPath.size() != (g.getNumOfVertexs())) {  return new ArrayList<V>();}
 		if(newEdges.contains((E) ne(hamPath.get(0).getId(), hamPath.get(hamPath.size()-1).getId()))
 		|| newEdges.contains((E) ne(hamPath.get(hamPath.size()-1).getId(), hamPath.get(0).getId()))){
 			hamPath.add(hamPath.get(0));	
-		}
-		System.out.println("..................");
-		for(E a : resEdges){
-
-			System.out.println(a.getId()[0] + "" + a.getId()[1]);
-
-		}
-		System.out.println("..................");
-		System.out.println(hamPath);
+		} 
 
 		return hamPath;
 

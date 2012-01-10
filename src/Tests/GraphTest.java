@@ -26,6 +26,7 @@ public class GraphTest {
 	Graph<Vertex,NormalEdge> g9 = makeGraph(vertexs(3),ne(0,1),ne(1,2),ne(2,3),ne(3,0));
 
 	Graph<Vertex,NormalEdge> g10 = makeGraph(vertexs(4),ne(0,1),ne(1,2),ne(2,3),ne(3,0),ne(0,4),ne(1,4),ne(2,4),ne(3,4));
+	Graph<Vertex,NormalEdge> g11 = makeGraph(vertexs(4),ne(0,1),ne(2,3),ne(0,4),ne(1,4),ne(2,4),ne(3,4));
 	public static Graph<Vertex,RatedEdge> g = makeGraph(vertexs(8),re(2,1,20),re(2,3,25),re(1,4,30),re(2,4,15),re(4,3,40),re(4,6,24),re(6,5,5),re(5,7,19));
 	@Test
 	public void test() {	
@@ -54,6 +55,7 @@ public class GraphTest {
 //		}
 		bondyChvatal(g9, 0, 0);
 		bondyChvatal(g10, 2, 0);
+		bondyChvatal(g11, 2, 0);
 	}
 
 }
