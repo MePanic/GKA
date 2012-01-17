@@ -60,7 +60,6 @@ public class GraphTest {
 		bondyChvatal(g11, 2, 0);
 		bondyChvatal(g10, 2, 0);
 //		fleury(g21, 0, 0);
-		bondyChvatal(g21, 0, 0);
 	}
 
 }
