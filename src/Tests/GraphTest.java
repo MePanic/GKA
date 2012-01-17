@@ -21,7 +21,7 @@ public class GraphTest {
 	Graph<Vertex,RatedEdge> g5 = makeDigraph(vertexs(8),re(0,1,20),re(1,2,25),re(1,3,30),re(2,4,15),re(3,5,40),re(4,6,24),re(5,7,5),re(6,8,19),re(7,8,18));
 	Graph<Vertex,CapacityEdge> g6 = makeDigraph(vertexs(8),ce(0,1,20),ce(1,2,25),ce(1,3,30),ce(2,4,15),ce(3,5,40),ce(4,6,24),ce(5,7,5),ce(6,8,19),ce(7,8,18));
 	Graph<Vertex,CapacityEdge> g7 = makeDigraph(vertexs(5),ce(0,1,3),ce(0,3,2),ce(1,2,2),ce(2,3,1),ce(3,4,2),ce(2,5,2),ce(3,1,2),ce(3,4,2),ce(4,5,4));
-												//vertex(5) hei�t 6 Ecken: 0...5
+												//vertex(5) heiï¿½t 6 Ecken: 0...5
 	Graph<Vertex,CapacityEdge> g8 = makeDigraph(vertexs(6), ce(0,1,3),ce(0,3,3),ce(1,2,4),ce(2,0,3),ce(2,3,1),ce(2,4,2),ce(3,4,2),ce(3,5,6),ce(4,1,1),ce(4,6,1),ce(5,6,9));
 	Graph<Vertex,NormalEdge> g9 = makeGraph(vertexs(3),ne(0,1),ne(1,2),ne(2,3),ne(3,0));
 
@@ -29,7 +29,7 @@ public class GraphTest {
 	Graph<Vertex,NormalEdge> g11 = makeGraph(vertexs(4),ne(0,1),ne(2,3),ne(0,4),ne(1,4),ne(2,4),ne(3,4));
 	Graph<Vertex,RatedEdge> g = makeGraph(vertexs(8),re(2,1,20),re(2,3,25),re(1,4,30),re(2,4,15),re(4,3,40),re(4,6,24),re(6,5,5),re(5,7,19));
 	Graph<Vertex,NormalEdge> g21 = makeGraph(vertexs(5),ne(0,1),ne(0,3),ne(0,4),ne(0,5),ne(1,2),ne(1,3),ne(1,4),ne(2,3),ne(3,4),ne(4,5));
-
+	Graph<Vertex,NormalEdge> g13 = makeGraph(vertexs(2), ne(0,1),ne(1,2));
 	@Test
 	public void test() {	
 	
@@ -56,9 +56,11 @@ public class GraphTest {
 //			}
 //		}
 		bondyChvatal(g9, 0, 0);
-		bondyChvatal(g10, 2, 0);
+		bondyChvatal(g10, 0, 0);
 		bondyChvatal(g11, 2, 0);
-		fleury(g21, 0, 0);
+		bondyChvatal(g10, 2, 0);
+//		fleury(g21, 0, 0);
+		bondyChvatal(g21, 0, 0);
 	}
 
 }
