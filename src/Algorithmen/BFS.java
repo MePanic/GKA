@@ -86,6 +86,12 @@ public class BFS {
 			zstNachher = System.currentTimeMillis();
 			time = zstNachher - zstVorher;
 			System.out.println("Zeit bentigt: " + time + " Millisec");
+
+			System.out.println(res);
+//			for(V o : res){
+//
+//				System.out.println("Zeit bentigt: " + time + " Millisec");
+//			}
 			return res;
 	}
 	
@@ -105,19 +111,37 @@ public class BFS {
 			zugriffe++;
 			temp.put(i + 1, new ArrayList<V>());
 			for (V v : temp.get(i)) {
-				zugriffe++;
 				for (V n : g.getNeighbors(v)) {
 					zugriffe++;
 					if (!visited.contains(n)) {
 						if (n == to) {
-							ArrayList<V> res = new ArrayList<V>((temp.keySet().size()));
-							for (int c = 0; c < (temp.keySet().size()-1); c++) {
-								zugriffe++;
-								res.add(c,temp.get(c).get(temp.get(c).size()-1));
+//							ArrayList<V> res = new ArrayList<V>((temp.keySet().size()));
+//							for (int c = 0; c < (temp.keySet().size()-1); c++) {
+//								zugriffe++;
+//								res.add(c,temp.get(c).get(temp.get(c).size()-1));
+//							}
+							temp.get(i + 1).add(n);
+							ArrayList<V> tres = new ArrayList<V>();
+							ArrayList<V> res = new ArrayList<V>();
+							V n1 = n;
+							res.add(n);
+							boolean set = true;
+							for (int c = temp.keySet().size(); c >0 ; c--) {
+							set = false;
+							for(V o : g.getNeighbors(n1)){
+								if(!set && temp.get(c-1).contains(o)){
+									res.add(o);
+									n1 = o;
+									set = true;
+								}
+							}
+						}
+							for(int i3 = res.size()-1; i3>=0 ; i3--){
+								tres.add(res.get(i3));
 							}
 							
-								res.add(n);
-							return res;
+							
+							return tres;
 						}
 						visited.add(n);
 						zugriffe++;

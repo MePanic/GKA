@@ -55,6 +55,7 @@ public class Fleury {
 		boolean added = true;
 
 		for(V e : g.getVertexs()){
+			zugriffe++;
 			if(g.getNeighbors(e).size()%2 > 0)
 			return w;
 		}
@@ -62,6 +63,7 @@ public class Fleury {
 		while(!checked.containsAll(g.getEdges())){
 			added = false;
 			for(V e : g.getNeighbors(next)){
+				zugriffe++;
 				if(!checked.containsAll(g.getEdgeBetween(next,e)) && !g.teilgraphWithout(new ArrayList<V>(),checked).isSchnittkante(g.getEdgeBetween(next,e))){
 					checked.addAll(g.getEdgeBetween(next,e));
 					added = true;
@@ -72,6 +74,7 @@ public class Fleury {
 			}
 			if(!added){
 				for(V e : g.getNeighbors(next)){
+					zugriffe++;
 					if(!checked.containsAll(g.getEdgeBetween(next,e))){
 						
 						checked.addAll(g.getEdgeBetween(next,e));

@@ -9,7 +9,10 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 import Algorithmen.BFS;
+import Algorithmen.BondyChvatal;
 import Algorithmen.Dijkstra;
+import Algorithmen.EdmundKarp;
+import Algorithmen.Fleury;
 import Algorithmen.FloydWarshall;
 import Algorithmen.FordFulkerson;
 import Interfaces.CapacityEdge;
@@ -232,8 +235,8 @@ public class Frame extends JFrame {
 					Integer intValue1 = Integer.parseInt(numFieldEK1.getText());
 					Integer intValue2 = Integer.parseInt(numFieldEK2.getText());
 					jg.setFlow(shortestWayEdmundKarp((Graph<Vertex, CapacityEdge>) g, intValue1, intValue2,1000));
-					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
-					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
+					timeTxtField.setText("Time: " + EdmundKarp.getLastTime()	+ "ms");
+					zugriffeTxtField.setText("Zugriffe: "+ EdmundKarp.getLastZugriffe());
 				}
 				return;
 			}
@@ -245,25 +248,25 @@ public class Frame extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldFLE1.getText().equals(""))) {
 					Integer intValue1 = Integer.parseInt(numFieldFLE1.getText());
-					jg.highlightFleury(fleury((Graph<Vertex, Edge>) g, intValue1,0));
-					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
-					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
+					jg.highlightFleury(fleury((Graph<Vertex, Edge>) g, intValue1,1000));
+					timeTxtField.setText("Time: " + Fleury.getLastTime()	+ "ms");
+					zugriffeTxtField.setText("Zugriffe: "+ Fleury.getLastZugriffe());
 				}
 				return;
 			}
 		};
 		buttonFLE.addActionListener(actionListenerFLE);
 
-		buttonBC = new JButton("<HTML><font size=2><CENTER><BODY>Fleury</BODY></font></HTML>");
+		buttonBC = new JButton("<HTML><font size=2><CENTER><BODY>Bondy Chvatal</BODY></font></HTML>");
 		ActionListener actionListenerBC = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!(numFieldBC1.getText().equals(""))) {
 					Integer intValue1 = Integer.parseInt(numFieldBC1.getText());
 					
-					jg.highlightFleury(bondyChvatal((Graph<Vertex, Edge>) g, intValue1,0));
+					jg.highlightBC(bondyChvatal((Graph<Vertex, Edge>) g, intValue1,1000));
 					
-					timeTxtField.setText("Time: " + FordFulkerson.getLastTime()	+ "ms");
-					zugriffeTxtField.setText("Zugriffe: "+ FordFulkerson.getLastZugriffe());
+					timeTxtField.setText("Time: " + BondyChvatal.getLastTime()	+ "ms");
+					zugriffeTxtField.setText("Zugriffe: "+ BondyChvatal.getLastZugriffe());
 				}
 				return;
 			}
