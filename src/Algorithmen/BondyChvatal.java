@@ -51,61 +51,95 @@ public class BondyChvatal {
 
 	private static <V extends Vertex, E extends Edge> ArrayList<V> doBondyChvatal(Graph<V, E> g, V from) {
 
-		Graph<V, E> hull = makeGraphl(g.getVertexs(), g.getEdges());
 		ArrayList<E> newEdges = new ArrayList<E>();
 		newEdges.addAll(g.getEdges());
-		ArrayList<V> blub = g.getVertexs();
 		ArrayList<V> hamPath = new ArrayList<V>();
 		ArrayList<E> resEdges = new ArrayList<E>();
 
 		boolean changed = true;
+		V prevVert = from;
+		V vert = from;
+		int grad;
+		int eigenGrad;
+		int runs = 0;
 		while(changed){
-			changed = false;
-			hull = makeGraphl(blub, newEdges);
-			
-			for(int i = 0; i < (hull.getNumOfVertexs()-1); i++){
-				for(int k = i+1; k < hull.getNumOfVertexs(); k++){
-					if(g.getEdgeBetween(g.getV(i), hull.getV(k)).size() == 0 
-					&& ((hull.getNeighbors(hull.getV(i)).size() + hull.getNeighbors(hull.getV(k)).size()) >= hull.getNumOfVertexs())
-					&& !hull.getEdges().contains(ne(i,k))){
-						newEdges.add((E) ne(i, k));
-						zugriffe++;
-						changed = true;
-					}
-				}
+			runs++;
+			resEdges.clear();
+			resEdges.addAll(newEdges);
+			eigenGrad = 0;
+			for(E e : resEdges){
+				if(e.getId()[0] == vert.getId() || e.getId()[1] == vert.getId()){
+					eigenGrad ++;
+				}				
 			}
-		}
-		
-		changed = true;
-		resEdges.addAll(hull.getEdges());
-		hamPath.add(from);
-		while(changed){
-
-			changed = false;
-			hull = makeGraphl(blub, resEdges);
-			V actV = hamPath.get(hamPath.size()-1);
-			for(V v : hull.getNeighbors(actV)){
-				if(hull.getEdges().contains((E) ne(actV.getId(), v.getId()))&& !hamPath.contains(v)){
-					hamPath.add(v);
-					zugriffe++;
-					for(V x: hull.getNeighbors(v)){
-						if(hamPath.contains(x) && hamPath.get(hamPath.size()-2) != x ){
-							resEdges.remove(ne(v.getId(), x.getId()));
-							resEdges.remove(ne(x.getId(), v.getId()));
-							zugriffe++;
+			
+			for(E e : resEdges){
+				if(e.getId()[0] == vert.getId()){
+					grad = 0;
+					for(E f : resEdges){
+						if(f.getId()[0] == e.getId()[1] ||f.getId()[1] == e.getId()[1]){
+							grad++;
 						}
 					}
-					changed = true;
+					if(grad > 2 && eigenGrad > 2){newEdges.remove(e); eigenGrad--;}
+					
+				}
+				if(e.getId()[1] == vert.getId()){
+					grad = 0;
+					for(E f : resEdges){
+						if(f.getId()[0] == e.getId()[0] ||f.getId()[1] == e.getId()[0]){
+							grad++;
+						}
+					}
+					if(grad > 2 && eigenGrad > 2){newEdges.remove(e); eigenGrad--;}
+					
+				}
+			}
+				
+				
+
+				for(E h : newEdges){
+					if((h.getId()[0] == vert.getId() && h.getId()[1] != prevVert.getId())){
+						prevVert = vert;
+						vert = g.getV(h.getId()[1]);
+						continue;
+					}
+						
+					if(h.getId()[1] == vert.getId() && h.getId()[0] != prevVert.getId()){
+						prevVert = vert;
+						vert = g.getV(h.getId()[0]);
+						continue;
+					}
+					
+				}
+			
+			
+			if(vert == from){changed = false;}
+			if(runs > g.getNumOfVertexs()){break;}
+		}
+		
+		if(newEdges.size() != g.getNumOfVertexs()){
+			return new ArrayList<V>();
+		}
+		
+		hamPath.add(from);
+		E tempEdge = null;
+		for(int z = 0; z < g.getNumOfVertexs()-1; z++){
+			for(E p : newEdges){
+				if(p.getId()[0] == hamPath.get(hamPath.size()-1).getId() && tempEdge != p){
+					hamPath.add(g.getV(p.getId()[1]));
+					tempEdge = p;
+					break;
+				}
+				if(p.getId()[1] == hamPath.get(hamPath.size()-1).getId()&& tempEdge != p){
+					hamPath.add(g.getV(p.getId()[0]));
+					tempEdge= p;
 					break;
 				}
 			}
+			
 		}
-		if(hamPath.size() != (g.getNumOfVertexs())) {  return new ArrayList<V>();}
-		if(newEdges.contains((E) ne(hamPath.get(0).getId(), hamPath.get(hamPath.size()-1).getId()))
-		|| newEdges.contains((E) ne(hamPath.get(hamPath.size()-1).getId(), hamPath.get(0).getId()))){
-			hamPath.add(hamPath.get(0));	
-		} 
-
+		
 		return hamPath;
 
 	}
